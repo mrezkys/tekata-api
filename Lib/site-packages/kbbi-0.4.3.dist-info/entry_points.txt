@@ -1,0 +1,4 @@
+[console_scripts]
+kbbi = kbbi:main
+kbbi-autentikasi = kbbi:autentikasi
+
