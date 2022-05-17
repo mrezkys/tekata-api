@@ -25,9 +25,9 @@ def word_check(word):
 
 @app.route('/level=<level>/word')
 def word(level):
-    if level == '5': filename = '5kata.txt'
-    elif level == '4': filename = '4kata.txt'
-    else: filename = '3kata.txt'
+    if level == '5': filename = 'data/5kata.txt'
+    elif level == '4': filename = 'data/4kata.txt'
+    else: filename = 'data/3kata.txt'
 
     with open(filename) as file:
         f = file.read()
@@ -71,3 +71,6 @@ def hello(answer, key):
         return {
             'status' : False,
         }
+
+if __name__ == "__main__":
+  app.run()
