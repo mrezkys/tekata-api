@@ -15,7 +15,7 @@ def word_check(word):
         return {
             'status' : True,
             'message' : 'Terdapat di KBBI ',
-            'data' : result.serialisasi(),
+            'data' : result.__str__(),
         }
     except TidakDitemukan as e:
         return {
