@@ -34,7 +34,10 @@ def word(level):
         words = list(map(str, f.split()))
         key = random.choice(words)
 
-    return key
+    return {
+      'status' : True,
+      'key' : key,
+    }
 
 @app.route('/answer=<answer>&key=<key>')
 def hello(answer, key):
