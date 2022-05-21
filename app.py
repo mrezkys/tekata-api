@@ -51,12 +51,14 @@ def hello(answer, key):
                 return 'not found'
 
         word_index = 0
+        all_true = True
         result = list()
         for word in answer:
             check = check_index(word, key)
             if check == 'not found':
                 print(word + ' tidak ada')
                 result.append('false')
+                all_true = False
             else:
                 if word_index == check:
                     print(word + ' posisi benar')
@@ -64,10 +66,11 @@ def hello(answer, key):
                 elif word_index != check:
                     print(word + ' posisi salah')
                     result.append('wrong')
+                    all_true = False
             word_index+=1
 
         return {
-            'status' : True,
+            'status' : all_true,
             'data' :   result,
             'kbbi' : kbbi_check['data'],
         }
