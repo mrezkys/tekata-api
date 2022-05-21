@@ -69,6 +69,7 @@ def hello(answer, key):
         return {
             'status' : True,
             'data' :   result,
+            'kbbi' : kbbi_check['data'],
         }
     else :
         return {
