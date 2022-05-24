@@ -63,16 +63,19 @@ def hello(answer, key):
     print(kbbi_check)
     if kbbi_check['status'] == True:
         result = list()
+        all_true = True
         for i, word in enumerate(answer):
             if key.find(word)  == -1:
                 result.append('false')
+                all_true = False
             elif word == key[i]:
                 result.append('true')
             else:
                 result.append('wrong')
+                all_true = False
 
         return {
-            'status' : True,
+            'status' : all_true,
             'data' :   result,
             'kbbi' : kbbi_check['data'],
         }
