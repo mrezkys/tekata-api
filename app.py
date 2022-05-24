@@ -8,6 +8,24 @@ from kbbi import TidakDitemukan
 
 app = Flask(__name__)
 
+import time
+from flask import g
+
+@app.before_request
+def before_request():
+    g.start = time.time()
+
+@app.after_request
+def after_request(response):
+    diff = time.time() - g.start
+    if ((response.response) and
+        (200 <= response.status_code < 300) and
+        (response.content_type.startswith('text/html'))):
+        response.set_data(response.get_data().replace(
+            b'__EXECUTION_TIME__', bytes(str(diff), 'utf-8')))
+    print(bytes(str(diff), 'utf-8'))
+    return response
+
 @app.route('/check=<word>')
 def word_check(word):
     try:
@@ -44,33 +62,17 @@ def hello(answer, key):
     kbbi_check = word_check(answer)
     print(kbbi_check)
     if kbbi_check['status'] == True:
-        def check_index(char, word):
-            try:
-                return word.index(char)
-            except ValueError:
-                return 'not found'
-
-        word_index = 0
-        all_true = True
         result = list()
-        for word in answer:
-            check = check_index(word, key)
-            if check == 'not found':
-                print(word + ' tidak ada')
+        for i, word in enumerate(answer):
+            if key.find(word)  == -1:
                 result.append('false')
-                all_true = False
+            elif word == key[i]:
+                result.append('true')
             else:
-                if word_index == check:
-                    print(word + ' posisi benar')
-                    result.append('true')
-                elif word_index != check:
-                    print(word + ' posisi salah')
-                    result.append('wrong')
-                    all_true = False
-            word_index+=1
+                result.append('wrong')
 
         return {
-            'status' : all_true,
+            'status' : True,
             'data' :   result,
             'kbbi' : kbbi_check['data'],
         }
